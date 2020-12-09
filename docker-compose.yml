@@ -1,0 +1,47 @@
+version: "3.5"
+
+services:
+  # Using nginx to roadbalance for android emulators  
+  roadbalance:
+    build: /nginx
+    hostname: nginx
+    networks: 
+          - docker_network
+          
+  #android_7.1.1:
+  #    image: budtmo/docker-android-x86-7.1.1
+  #    privileged: true
+  #    hostname: android7-1-1
+  #    networks: 
+  #          - docker_network
+  #    expose:
+  #      - 6080
+  #    # for apk install path
+  #    volumes:
+  #      - $PWD/example/${ApkName}:/root/tmp/${ApkName}
+  #    environment:
+  #      - DEVICE=Nexus 5
+  #    depends_on: 
+  #      
+  android_10:
+      image: budtmo/docker-android-x86-10.0
+      privileged: true
+      hostname: android10
+      networks: 
+            - docker_network
+      expose:
+        - 6081
+      # for apk install path
+      volumes:
+        - $PWD/example/${ApkName}:/root/tmp/${ApkName}
+      environment:
+        - DEVICE=Samsung Galaxy S10
+
+
+networks:
+    docker_network:
+        driver: bridge
+        driver_opts:
+            com.docker.network.enable_ipv6: "true"
+        ipam:
+            driver: default
